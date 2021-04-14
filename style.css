@@ -1,0 +1,1466 @@
+/*Custom Properties*/
+
+/*root es la etiqueta que tiene mayor jerarquia, por lo tanto es HTML.*/
+:root {
+--button-color: #d90062;
+/* --first-color: #d90062; */
+--first-color: #f3f3f3;
+--first-alpha-color: rgba(217, 0, 98,0.75);
+/* --second-color: #14192d; */
+--second-color: rgba(0, 0, 0, 0.87);
+--second-alpha-color: rgba(20, 25, 45,0.75);
+--white-color: #fff;
+--gray-light-color: #f3f3f3;
+--gray-color: #ccc;
+--gray-dark-color: #666;
+--black-color: #000;
+--link-color: #509ee3;
+--title-color: #333;
+--text-color: #222;
+--white-alpha-color: rgba(255, 255, 255, 0.5);
+--black-alpha-color: rgba(0, 0, 0,0.5);
+--font:"Raleway", sans-serif;
+--font-title:'Mulish', sans-serif;
+--max-width: 1200px;
+--header-height: 4rem; /* 4 * 16px = 64px. 1rem equivale a 16px*/
+}
+
+/*Reset CSS*/
+
+html {
+/*Descripcion: El tamaño de la caja va a comenzar desde el borde y NO desde el contenido como es por default. Es un recurso muy utilizado en cualquier framework. Nos asegura que el ancho y alto de una caja va a ir dsde el borde y no del contenido, ya que si lo dejamos por default corremos el riesgo de que cuando apliquemos paddings o borders los tamaños no correspondan.*/
+box-sizing: border-box;
+font-family: var(--font); /*Utiliza la variable font definida arriba.*/
+font-size: 16px;/* Utilizamos los 16px explicitos ya que se esta utilizando la unidad de medida rem que esta basado en el tamaño de la tipografia del elemento :root o sea la etiqueta html.*/
+scroll-behavior: smooth; /*Permite el desplazamiento/transicion entre secciones.*/
+}
+
+/*Descripcion: Con el selector universal todos sus elementos generado dinamicamente con after y before que hereden el tamaño de caja, que lo van a heredar del nodo principal que es la etiqueta HTML. */
+*,
+*::after,
+*::before {
+    box-sizing:inherit;
+}
+
+body {
+    margin: 0;
+    overflow-x:hidden; /*Elimina la barra de desplazamiento horizontal.*/
+    color:var(--text-color)
+}
+
+a {
+    color: var(--link-color);
+    transition: all 0.5s ease-out;
+}
+
+a:hover {
+    opacity: 0.75;
+}
+
+/*TODOS los headers o encabezados tiene un poco de margen arriba y abajo dependiendo del nivel de encabezado van variando los lenguajes, pero los reseteamos a cero para luego darle la distancia adecuada a cada uno de ellos.*/
+h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+h3 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+h4 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+h5 {
+    margin: 0;
+    font-size: 0.85rem;
+}
+
+h6 {
+    margin: 0;
+    font-size: 0.7rem;
+}
+
+img {
+    max-width: 100%; /*Hack para que la imagen sea responsive.*/
+    height: auto;
+}
+
+p {
+    line-height: 1.6; /*Interlineado a cada una de las lineas de un párrafo.*/
+}
+
+
+/*Components*/
+
+/*Carousel*/
+
+/*Animacion de Carousel para transicion automatica*/
+@keyframes carousel-slide {
+    0% {
+        transform: translateX(0%)
+    }
+
+    25%{
+        transform: translateX(-25%)
+    }
+
+    50%{
+        transform: translateX(-50%)
+    }
+
+    75% {
+        transform: translateX(-75%)
+    }
+}
+
+.carousel {
+    margin: 2rem auto;
+    padding: 2rem 0;
+    max-width: 800px;
+    text-align: center;
+    overflow-x: hidden;
+    background-color: var(--carousel-bg-color);
+}
+
+.carousel .slides {
+    padding-left: 0;
+    /*Por cada slide que tenga tu carousel hay que sumarle un 100% al ancho*/
+    width: 400%;
+    display: flex;
+    list-style: none;
+    transition: transform .5s ease-in-out;
+    animation: carousel-slide 12s ease-in-out 2s;
+}
+
+.carousel input {
+    display: none;
+}
+
+.carousel label {
+    border: medium solid var(--gray-dark-color);
+    border-radius: 50%;
+    cursor: pointer;
+    margin: 0 .25rem;
+    display: inline-block;
+    width: .75rem;
+    height: .75rem;
+}
+
+#slide-1:checked ~ .slides {
+    transform: translateX(0%)
+}
+
+#slide-2:checked ~ .slides {
+    transform: translateX(-25%)
+}
+
+#slide-3:checked ~ .slides {
+    transform: translateX(-50%)
+}
+
+#slide-4:checked ~ .slides {
+    transform: translateX(-75%)
+}
+
+#slide-1:checked ~ .slides-nav label#dot-1,
+#slide-2:checked ~ .slides-nav label#dot-2,
+#slide-3:checked ~ .slides-nav label#dot-3,
+#slide-4:checked ~ .slides-nav label#dot-4 {
+    background-color: var(--gray-dark-color);
+}
+
+/*Contact Form*/
+.contact-form {
+    margin: 2rem auto;
+    padding: 1rem;
+    max-width: 800px;
+}
+
+.contact-form > * {
+    padding: 0.5rem;
+    margin: 1rem auto;
+    display: block;
+    width: 100%;
+}
+
+.contact-form input {
+    border: 0;
+    padding: 10px 0;
+    border-bottom: thin solid var(--gray-dark-color);
+    font-family: var(--font-title);
+}
+
+.contact-form textarea {
+    font-size: 0.85rem;
+    font-family: var(--font);
+}
+
+.contact-form textarea {
+    border-bottom: thin solid var(--gray-dark-color);
+    resize: none;
+}
+
+.contact-form input[type = "submit"] {
+    margin-top: 0;
+    cursor: pointer;
+    transition: all .5s ease-out;
+}
+
+.contact-form input[type = "submit"]:hover {
+    opacity: 0.75;
+}
+
+.contact-form *::placeholder {
+    color: var(--gray-dark-color);
+}
+
+.contact-form-response {
+    padding: 1rem;
+    width: 400px;
+    text-align: center;
+    background-color: var(--white-color);
+}
+
+.contact-form-response svg {
+    margin-top: 2rem;
+    width: 4rem;
+    height: 4rem;
+    fill: var(--second-color);
+}
+
+.modal#gracias:target {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+@media screen and (min-width: 1024px) {
+    .contact-form {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 1rem;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+        font-size: 1rem;
+    }
+
+    .contact-form textarea,
+    .contact-form-loader {
+        grid-column: span 2;
+    }
+
+    .contact-form input[type="submit"] {
+        margin-left: 0;
+    }
+
+}
+
+/*HeroImage*/
+.hero-image {
+    /* width: 100%;
+    min-height: 100vh; */
+    background-image: var(--hero-image);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: var(--attachment);
+}
+
+.hero-image-content {
+    width: 80%;
+    height: 20%;
+    display: inline-block;
+}
+
+/* .hero-image-content img{
+    width: 150rem;
+} */
+
+.hero-image-opacity {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: var(--hero-opacity-color);
+}
+
+.hero-image-gradient {
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--second-color);
+    /* background: linear-gradient(45deg, #ee7752, #e73c7e,#23a6d5, #23d5ab); */
+    /* background: -webkit-linear-gradient(45deg, #b03ffc 0%,#00bcfe 50%,#00bcfe 80%); */
+    /* background: linear-gradient(-45deg, #d0d8da, #3c3c39,#0a0a0a);*/
+    /* background: linear-gradient(-45deg, #deded9, #3c3c39,#0a0a0a, #d0d8da); */
+    /* background: linear-gradient(-45deg, #d0d8da, #3c3c39,#0a0a0a);  */
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.hero-image-title{
+    font-family: var(--font-title);
+    outline: thin;
+    font-size: 5.0vw;
+    color: var(--hero-text-color);
+    animation: gradient 15s ease infinite;
+    animation-name: changeColorText;
+    /* margin-top: 2.5rem; */
+
+    /* background: -webkit-linear-gradient(-45deg, #b03ffc 0%,#00bcfe 50%,#00bcfe 100%); */
+    /* background: linear-gradient(-45deg, #ee7752, #e73c7e,#23a6d5, #23d5ab);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; */
+
+    /* background: -webkit-linear-gradient(45deg, #b03ffc 0%,#00bcfe 50%,#00bcfe 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; */
+}
+
+@keyframes changeColorText {
+    0% {
+        color: var(--black-color);
+    }
+
+    10%{
+        color: var(--black-color);
+    }
+
+    20% {
+        color: var(--white-alpha-color);
+    }
+
+    25% {
+        /* color: var(--white-alpha-color); */
+        color: var(--white-alpha-color);
+    }
+
+    50% {
+        /* color: var(--black-alpha-color); */
+        color: var(--white-alpha-color);
+    }
+
+    55% {
+        color: var(--white-alpha-color);
+    }
+
+    60% {
+        /* color: var(--black-color); */
+        color: var(--white-alpha-color);
+    } 
+
+    65%{
+        /* color: var(--black-alpha-color) */
+        color: var(--white-alpha-color);
+    }
+
+    70% {
+        /* color: var(--white-alpha-color); */
+        color: var(--white-alpha-color);
+    }
+
+    75% {
+        /* color: var(--white-alpha-color); */
+        color: var(--white-alpha-color);
+    }
+
+    80% {
+        color: var(--white-color);
+    }
+
+    85% {
+        color: var(--white-color);
+    }
+
+    90% {
+        color: var(--white-color);
+    }
+
+    100% {
+        color: var(--white-color);
+    }
+    to{
+        /* El efecto se utilizaba asi antes de agregar la clase .hero-image-picture */
+        /* margin-right: 200%; */
+        /* width: 0%; */
+        /* margin-top: 10%; */
+        margin-bottom: 10%;
+    } 
+}
+
+
+.hero-image-picture {
+    /* padding-left: 10rem; */
+    width: 50%;
+    /* height: 40%; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /* animation-name: moveImage;
+    animation: gradient 15s ease infinite; */
+}
+
+/* @keyframes moveImage {
+
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+
+    to{
+        El efecto se utilizaba asi antes de agregar la clase .hero-image-picture
+        margin-right: 200%;
+        width: 10%;
+        margin-left: 20%;
+    } 
+} */ 
+
+
+.hero-image-picture img{
+    border-radius: 50rem;
+    width: 55%;
+    /* place-content: center center; */
+    padding-top: 50px;
+    /* margin-left: 10rem; */
+    /* width: 75%; */
+    /* height: auto; */
+    animation: changeImageStyle 15s ease 1;
+    animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
+    /* animation-name: changeImageStyle; */
+}
+
+@keyframes changeImageStyle{
+    0% {
+        /* background-position: 0% 50%; */
+        -webkit-filter: blur(5px); /* Safari 6.0 - 9.0 */
+        filter: blur(5px);
+
+    }
+
+    5% {
+        -webkit-filter: blur(4.5px); /* Safari 6.0 - 9.0 */
+        filter: blur(4.5px);
+    }
+
+    10%{
+        -webkit-filter: blur(4.25px); /* Safari 6.0 - 9.0 */
+        filter: blur(4.25px);
+    }
+
+    15%{
+        -webkit-filter: blur(4px); /* Safari 6.0 - 9.0 */
+        filter: blur(4px);
+    }
+
+    20%{
+        -webkit-filter: blur(3.75px); /* Safari 6.0 - 9.0 */
+        filter: blur(3.75px);
+    }
+
+    25% {
+        -webkit-filter: blur(3.5px); /* Safari 6.0 - 9.0 */
+        filter: blur(3.5px);
+    }
+
+    50% {
+        /* background-position: 100% 50%; */
+        -webkit-filter: blur(3.25px); /* Safari 6.0 - 9.0 */
+        filter: blur(3.25px);
+    }
+
+    55%{
+        -webkit-filter: blur(3px); /* Safari 6.0 - 9.0 */
+        filter: blur(3px);
+    }
+
+    60%{
+        -webkit-filter: blur(2.75px); /* Safari 6.0 - 9.0 */
+        filter: blur(2.75px);
+    }
+
+    65%{
+        -webkit-filter: blur(2.50px); /* Safari 6.0 - 9.0 */
+        filter: blur(2.50px);
+    }
+
+    70% {
+        -webkit-filter: blur(2.25px); /* Safari 6.0 - 9.0 */
+        filter: blur(2.25px);
+    }
+
+    73% {
+        -webkit-filter: blur(2.00px); /* Safari 6.0 - 9.0 */
+        filter: blur(2.00px);
+    }
+
+    75% {
+        -webkit-filter: blur(1.75px); /* Safari 6.0 - 9.0 */
+        filter: blur(1.75px);
+    }
+
+    80%{
+        -webkit-filter: blur(1.50px); /* Safari 6.0 - 9.0 */
+        filter: blur(1.50px);
+    }
+
+    85% {
+        -webkit-filter: blur(1.25px); /* Safari 6.0 - 9.0 */
+        filter: blur(1.25px);
+    }
+
+    90% {
+        -webkit-filter: blur(1px); /* Safari 6.0 - 9.0 */
+        filter: blur(1px);
+    }
+
+    93% {
+        -webkit-filter: blur(0.75px); /* Safari 6.0 - 9.0 */
+        filter: blur(0.75px);
+    }
+
+    95% {
+        -webkit-filter: blur(0.50px); /* Safari 6.0 - 9.0 */
+        filter: blur(0.50px);
+    }
+
+    97% {
+        -webkit-filter: blur(0.25px); /* Safari 6.0 - 9.0 */
+        filter: blur(0.25px);
+    }
+
+    100% {
+        /* background-position: 0% 50%; */
+        -webkit-filter: blur(0px); /* Safari 6.0 - 9.0 */
+        filter: blur(0px);
+    }
+
+    to{
+        /* El efecto se utilizaba asi antes de agregar la clase .hero-image-picture */
+        /* margin-right: 200%; */
+        /* width: 10%;
+        margin-left: 20%; */
+        /* margin-top: 20%; */
+        margin-left: 80%;
+    } 
+
+}
+
+.hero-image-hello{
+    font-family: var(--font-title);
+    outline: thin;
+    font-size: 5.0vw;
+    color: var(--hero-text-color);
+    animation: changeColorText 15s ease infinite;
+    /* margin-top: 2.5rem; */
+
+    /* background: -webkit-linear-gradient(-45deg, #b03ffc 0%,#00bcfe 50%,#00bcfe 100%); */
+    /* background: linear-gradient(-45deg, #ee7752, #e73c7e,#23a6d5, #23d5ab);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; */
+
+    /* background: -webkit-linear-gradient(45deg, #b03ffc 0%,#00bcfe 50%,#00bcfe 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; */
+}
+
+@keyframes changeColorText {
+    0% {
+        color: var(--black-color);
+    }
+
+    10%{
+        color: var(--black-color);
+    }
+
+    20% {
+        color: var(--white-alpha-color);
+    }
+
+    25% {
+        /* color: var(--white-alpha-color); */
+        color: var(--white-alpha-color);
+    }
+
+    50% {
+        /* color: var(--black-alpha-color); */
+        color: var(--white-alpha-color);
+    }
+
+    55% {
+        color: var(--white-alpha-color);
+    }
+
+    60% {
+        /* color: var(--black-color); */
+        color: var(--white-alpha-color);
+    } 
+
+    65%{
+        /* color: var(--black-alpha-color) */
+        color: var(--white-alpha-color);
+    }
+
+    70% {
+        /* color: var(--white-alpha-color); */
+        color: var(--white-alpha-color);
+    }
+
+    75% {
+        /* color: var(--white-alpha-color); */
+        color: var(--white-alpha-color);
+    }
+
+    80% {
+        color: var(--white-color);
+    }
+
+    85% {
+        color: var(--white-color);
+    }
+
+    90% {
+        color: var(--white-color);
+    }
+
+    100% {
+        color: var(--white-color);
+    }
+    to{
+        /* El efecto se utilizaba asi antes de agregar la clase .hero-image-picture */
+        /* margin-right: 200%; */
+        /* width: 0%; */
+        /* margin-top: 10%; */
+        margin-top: 5%;
+    } 
+}
+
+.hero-image-my-name {
+    font-family: var(--font-title);
+    outline: thin;
+    font-size: 3.0vw;
+    /* display:inline; */
+    /* color: var(--hero-text-color); */
+    animation: changeTransition 15s ease infinite;
+    /* margin-top: 2.5rem; */
+
+    /* background: -webkit-linear-gradient(-45deg, #b03ffc 0%,#00bcfe 50%,#00bcfe 100%); */
+
+    /*Asi ponemos fondo gradiente al texto*/
+    /* background: linear-gradient(-45deg, #ee7752, #e73c7e,#23a6d5, #23d5ab);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; */
+
+}
+
+@keyframes changeTransition {
+    0% {
+        color: var(--black-color);
+    }
+
+    10%{
+        color: var(--black-color);
+    }
+
+    20% {
+        color: var(--black-color);
+    }
+
+    23% {
+        /* -webkit-transform: rotate(-180deg); */
+        color: var(--black-alpha-color);
+    }
+
+    25% {
+        /* color: var(--white-alpha-color); */
+        color: var(--black-alpha-color);
+    }
+
+    30%{
+        color: var(--white-alpha-color);
+    }
+
+    40% {
+        color: var(--white-alpha-color);
+    }
+
+    50% {
+        /* color: var(--black-alpha-color); */
+        color: var(--white-alpha-color);
+    }
+
+    55% {
+        color: var(--white-alpha-color);
+    }
+
+    60% {
+        /* color: var(--black-color); */
+        color: var(--white-alpha-color);
+    } 
+
+    65%{
+        /* color: var(--black-alpha-color) */
+        color: var(--white-alpha-color);
+    }
+
+    70% {
+        /* color: var(--white-alpha-color); */
+        color: var(--white-alpha-color);
+    }
+
+    75% {
+        /* color: var(--white-alpha-color); */
+        color: var(--white-alpha-color);
+    }
+
+    80% {
+        color: var(--white-color);
+    }
+
+    85% {
+        color: var(--white-color);
+    }
+
+    90% {
+        color: var(--white-color);
+    }
+
+    100% {
+        color: var(--white-color);
+    }
+
+        to{
+            margin-right: 25%;
+            margin-top: 10%;
+        } 
+    }
+
+
+.hero-image-name {
+    font-family: var(--font-title);
+    outline: thin;
+    font-size: 5.0vw;
+    color: var(--hero-text-color);
+    animation: gradient 15s ease infinite;
+    animation-name: changeNameColor;
+    /* animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards; */
+
+    /* background: -webkit-linear-gradient(-45deg, #b03ffc 0%,#00bcfe 50%,#00bcfe 100%); */
+
+    /*Asi ponemos fondo gradiente al texto*/
+    /* background: linear-gradient(-45deg, #ee7752, #e73c7e,#23a6d5, #23d5ab);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; */
+
+}
+
+@keyframes changeNameColor {
+
+        0% {
+            color: var(--black-color)
+        }
+    
+        10%{
+            color: var(--black-color)
+        }
+
+        15% {
+            color: var(--black-alpha-color);
+        }
+    
+        20% {
+            color: var(--black-alpha-color);
+        }
+    
+        25% {
+            /* color: var(--white-alpha-color); */
+            color: var(--black-alpha-color);
+        }
+
+        30% {
+            color: var(--black-alpha-color);
+        }
+
+        32% {
+            color: var(--black-alpha-color);
+        }
+
+        35% {
+            color: var(--black-alpha-color);
+        }
+
+        40% {
+            color: var(--white-alpha-color);
+        }
+
+        45% {
+            color: var(--white-alpha-color);
+        }
+    
+        50% {
+            color: var(--white-alpha-color);
+            /* color: var(--black-color)         */
+        }
+    
+        55% {
+            color: var(--white-alpha-color);
+        }
+    
+        60% {
+            /* color: var(--black-color); */
+            color: var(--white-alpha-color);
+            /* background: linear-gradient(-45deg, #b03ffc 0%,#00bcfe 50%,#00bcfe 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; */
+        } 
+    
+        65%{
+            /* color: var(--black-alpha-color) */
+            color: var(--white-alpha-color);
+            /* background: linear-gradient(-45deg, #ee7752, #e73c7e,#23a6d5, #23d5ab);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; */
+        }
+    
+        70% {
+            /* color: var(--white-alpha-color); */
+            color: var(--white-alpha-color);
+        }
+    
+        75% {
+            /* color: var(--white-alpha-color); */
+            color: var(--white-alpha-color);
+        }
+    
+        80% {
+            color: var(--white-color);
+        }
+    
+        85% {
+            color: var(--white-color);
+        }
+    
+        90% {
+            color: var(--white-color);
+        }
+    
+        100% {
+            color: var(--white-color);
+        }
+
+        to{
+            /* El efecto se utilizaba asi antes de agregar la clase .hero-image-picture */
+            /* margin-right: 200%; */
+            /* width: 0%; */
+            margin-top: 15%;
+            margin-left: 73%;
+        } 
+    }
+
+.hero-image-subtitle {
+    font-size: 3.5vw;
+    margin-bottom: 3rem;
+    color: var(--hero-text-color);
+    font-family: var(--font-title);
+    animation: gradient 15s ease infinite;
+    animation-name: changeSubtitleTextColor;
+
+    /* background: linear-gradient(45deg, #ee7752, #e73c7e,#23a6d5, #23d5ab);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; */
+}
+
+@keyframes changeSubtitleTextColor {
+
+
+    0% {
+        color: var(--black-color);
+    }
+
+    10%{
+        color: var(--black-color);
+    }
+
+    20% {
+        /* color: var(--black-alpha-color); */
+        color: var(--black-color);
+    }
+
+    25% {
+        /* color: var(--white-alpha-color); */
+        /* color: var(--black-alpha-color); */
+        color: var(--black-color);
+    }
+
+    50% {
+        /* color: var(--black-alpha-color); */
+        color: var(--black-alpha-color);
+    }
+
+    55% {
+        color: var(--white-alpha-color);
+    }
+
+    60% {
+        /* color: var(--black-color); */
+        color: var(--white-alpha-color);
+    } 
+
+    65%{
+        /* color: var(--black-alpha-color) */
+        color: var(--white-alpha-color);
+    }
+
+    70% {
+        /* color: var(--white-alpha-color); */
+        color: var(--white-alpha-color);
+    }
+
+    75% {
+        /* color: var(--white-alpha-color); */
+        color: var(--white-alpha-color);
+    }
+
+    80% {
+        color: var(--white-color);
+    }
+
+    85% {
+        color: var(--white-color);
+    }
+
+    90% {
+        color: var(--white-color);
+    }
+
+    100% {
+        color: var(--white-color);
+    }
+
+    to {
+        /* margin-top: 20%; */
+        margin-right: 53%;
+        /* margin-bottom: 50%; */
+        /* margin-left: 50%; */
+    }
+
+}
+
+
+/*Menu*/
+.menu-btn {
+    outline: thin solid var(--first-color);
+    border: 0;
+    background-color: var(--second-color);
+    cursor:pointer;
+}
+
+.menu-btn svg{
+    fill:var(--first-color)
+}
+
+.menu {
+    position: fixed;
+    left: 0;
+    bottom: var(--header-height);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--second-color);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+    border-radius: 80px;
+}
+
+.menu.is-active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.menu a {
+    padding-right: 1rem;
+    font-size: 1.5rem;
+    font-weight:lighter;
+    text-align: center;
+    text-decoration: none;
+    color:var(--first-color)
+}
+
+.menu a:hover {
+    color:var(--white-color);
+    background-color: var(--first-color);
+}
+
+/*Modal*/
+
+.modal {
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--black-alpha-color);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 1s;
+}
+
+.modal-content {
+    position: relative;
+}
+
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+
+.modal-close svg {
+    width: 3rem;
+    height: 3rem;
+    fill: var(--first-color)
+}
+
+
+.modal[id|="trabajo"]:target {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/*ProgressBar*/
+
+progress {
+    width:100%;
+    height: 1rem;
+    background-color: var(--gray-color);
+}
+
+/*Para Chrome*/
+progress::-webkit-progress-bar {
+    background-color: var(--gray-color);
+}
+
+/*Para Chrome*/
+progress::-webkit-progress-value {
+    background-color: var(--gray-dark-color);
+}
+
+/*Para Mozilla*/
+progress::-moz-progress-value {
+    background-color: var(--gray-dark-color)
+}
+
+.progress {
+    margin: 1rem auto;
+}
+
+.progress > p {
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+}
+
+@media screen and (min-width:1024px){
+    .menu-btn {
+        display: none;
+    }
+
+    .menu {
+        position: static;
+        width: auto;
+        flex-direction: row;
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .menu a {
+        padding: 0 1rem;
+    }
+
+    .menu a:last-child {
+        padding-right: 0;
+    }
+
+    .menu a:hover {
+        background-color: transparent;
+    }
+}
+
+/*Utilities(Se podrian utilizar en otros proyectos)*/
+
+.avatar {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+}
+
+.text-first-color {
+    color:var(--first-color);
+}
+
+.bg-gray-light {
+    background-color: var(--gray-light-color)
+}
+
+.box-shadow-1 {
+box-shadow: 0.25rem 0.25rem 1rem rgba(0, 0, 0, 0.25)
+}
+
+.btn {
+    border-radius: 1.5rem;
+    padding: 1rem;
+    display: inline-block;
+    width: 200px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: var(--white-color);
+    background-color: var(--black-color);
+}
+
+.container {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: var(--max-width);
+}
+
+.gray-scale {
+    filter: grayscale(1);
+}
+
+.none {
+    display: none;
+}
+
+.section { 
+    padding:2rem 1rem
+}
+
+.section-title {
+    border-top: thin solid var(--first-color);
+    border-bottom: thin solid var(--first-color);
+    margin: 2rem auto;
+    padding: .5rem 1rem;
+    width: 250px;
+    text-align: center;
+    color: var(--title-color);
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+@media screen and (min-width: 1024px) {
+
+    .full-lg-screen {
+        width: 100%;
+        min-height: 100vh;
+    }
+
+    .text-lg-center {
+        text-align: center;
+    }
+    
+    .text-lg-left {
+        text-align: left;
+    }
+    
+    .text-lg-right {
+        text-align: right;
+    }
+
+}
+
+/*Site Styles*/
+
+.about > article{
+    margin-bottom: 2rem;
+}
+
+.contact-card {
+    margin: 1rem auto;
+    padding: 1rem;
+    width: 100%;;
+    height: 144px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+}
+
+.contact-card > svg {
+    width: 2rem;
+    height: 2rem;
+    fill: var(--second-color);
+}
+
+.contact-card > small {
+    margin-top: -1rem;
+}
+
+.header {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: 999;
+    padding: 1rem;
+    width: 100%;
+    height: var(--header-height);
+    background-color: var(--black-color);
+}
+
+.footer {
+    margin-bottom: var(--header-height);
+    padding: .5 rem;
+    text-align: center;
+    color: var(--white-color);
+    background-color: var(--second-color);
+}
+
+.header > .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo a {
+    color: var(--first-color);
+    font-weight: bold;
+    font-size: 2rem;
+    text-decoration: none;
+}
+
+.portfolio-card {
+    position: relative;
+    width: 100%;
+    margin:0 auto;
+    display: block;
+}
+
+.portfolio-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.portfolio-card-info {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--first-alpha-color);
+    color: var(--white-color);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.5s ease-in-out;
+}
+
+.portfolio-card:hover .portfolio-card-info{
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.portfolio-card-info > div {
+    padding: 1rem;
+    border: thin solid var(--white-color);
+    width: 100%;
+    height: 100%;
+}
+
+.portfolio-modal {
+    padding: 1rem;
+    /* max-width: 400px; */
+    max-width: 350px;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--white-color);
+}
+
+.portfolio-modal h3 {
+    border-bottom: medium solid var(--first-color);  
+    margin: 1rem auto;
+    padding:.5rem 0;
+    color: var(--title-color);
+}
+
+.portfolio-details {
+    display: grid;
+    grid-template-columns: 40% 60%;
+    /* grid-auto-rows: 2rem; */
+    grid-auto-rows: 1.5rem;
+    /* grid-auto-rows: 1rem; */
+}
+
+.portfolio-details b {
+    color: var(--first-color)
+}
+
+.service-card {
+    margin: 1rem auto;
+    padding: 1rem;
+    text-align: center;
+}
+
+.service-card h3 {
+    color: var(--title-color)
+}
+
+.service-card svg {
+    fill: var(--first-color);
+    margin-bottom: 1.25rem;
+}
+
+.social-media a{
+    padding: 0 0.4rem;
+    text-decoration: none;
+}
+
+.social-media svg {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+/*Versión Tablet*/
+@media screen and (min-width:768px){
+
+    .contact-cards {
+        display: grid;
+        grid-template-columns: repeat(2, 48%);
+        justify-content: space-between;
+    }
+
+    .portfolio > .container {
+        display: grid;
+        grid-template-columns: repeat(2, 50%);
+    }
+
+    .portfolio .section-title {
+        grid-column: span 2;
+    }
+
+    .portfolio-modal {
+        max-width: 800px;
+        flex-direction: row;
+    }
+
+    .portfolio-info {
+        margin-left: 1rem;
+        align-self: center;
+    }
+
+    .services > .container {
+        display: grid;
+        grid-template-columns: repeat(2, 45%);
+        justify-content: space-between;
+        align-content: center;
+    }
+
+    .services .section-title {
+        grid-column: span 2;
+    }
+
+}
+
+/*Versión Desktop*/
+@media screen and (min-width:1024px){
+
+    .about {
+        display: grid;
+        /* grid-template-columns: repeat(3, 30%); */
+        grid-template-columns: repeat(2, 48%);
+        justify-content: space-between;
+        align-content: center;
+    }
+
+
+    .contact-cards {
+        grid-template-columns: repeat(4, 24%);
+    }
+
+    .footer {
+        margin-bottom: 0;
+    }
+
+    .header {
+        position: sticky;
+        top: 0;
+        padding: 0.5rem;
+        height: calc(var(--header-height) - 0.5rem);
+    }
+
+    .portfolio > .container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .portfolio .section-title {
+        grid-column: span 3;
+    }
+
+    .services > .container {
+        display: grid;
+        grid-template-columns: repeat(3, 30%);   
+    }
+
+    .services .section-title {
+        grid-column: span 3;
+    }
+
+}
